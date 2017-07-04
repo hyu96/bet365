@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('acc_money')->unsigned()->default(5000);
+            $table->integer('role')->default(0); // 0 is user, 1 is admin
             $table->rememberToken();
             $table->timestamps();
         });
