@@ -1,0 +1,43 @@
+.title{
+    border: 1px solid black;
+    line-height: 1.5em;
+    background-color: #4da6ff; 
+    color: #fff;
+}
+tr {
+	border: 1px solid black;
+}
+
+th {
+	text-align: center;
+	line-height: 3.5em;
+}
+
+#team_name{
+	border-bottom: none;
+}
+#score{
+	border-top: none;
+	border-bottom: none;
+}
+
+input {
+	text-align: center;
+	height: 30px;
+	width: 200px;
+}
+
+#submit{
+	text-align: left;
+	border-top: none;
+}
+
+
+#submit > th {
+	padding: 30px 0;
+}
+
+#submit .submit_button {
+	width: 150px;
+	height: 30px;
+}

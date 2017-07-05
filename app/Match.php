@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model
 {
-	protected $table = 'Matches';
+	protected $table = 'matches';
 
 	public function bet()
 	{

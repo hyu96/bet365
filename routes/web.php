@@ -11,10 +11,25 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function () { 
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/','HomeController@index');
+Route::get('/home','HomeController@index');
+
+
+Route::post('admin/matches/hidden/{id}/public', 'HiddenMatchController@publicMatch')->name('hidden.public');
+
+Route::resource('admin/matches/public','PublicMatchController', ['except' => [
+    'create'
+]]);
+
+Route::resource('admin/matches/hidden','HiddenMatchController', ['except' => [
+    'show'
+]]);
+
+
+Route::get('/betting',['UserController@showListMatch'])->name('user.betting');
