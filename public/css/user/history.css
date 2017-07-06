@@ -1,0 +1,10 @@
+.brand{
+	background-color: #4da6ff; 
+    color: #fff;
+}
+
+th {
+	border: 1px solid black;
+	text-align: center;
+	line-height: 2.5em;
+}

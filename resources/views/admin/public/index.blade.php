@@ -42,7 +42,7 @@
 						<th colspan="1">{{ $match->time_close_bet }}</th>
 						<th colspan="1">{{ $match->time_start }}</th>
 						<th colspan="1">{{ $match->time_end }}</th>
-						@if($match->home_score == null)
+						@if($match->done == 0)
 							<th colspan="1"></th>
 							<th colspan="1">
 								<a href="{{route('public.show',$match->id)}}" class="btn btn-info" id='detail_button'>

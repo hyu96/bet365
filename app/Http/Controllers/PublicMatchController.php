@@ -76,6 +76,7 @@ class PublicMatchController extends Controller
         
         $match->home_score = $request->home_score;
         $match->away_score = $request->away_score;
+        $match->done = 1;
 
         $match->save();
         return redirect()->route('public.index');

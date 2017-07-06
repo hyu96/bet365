@@ -15,6 +15,7 @@
 @include('partials.admin_navbar')
 
 @section('body.content')
+	{{ csrf_field() }}
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">

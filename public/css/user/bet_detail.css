@@ -1,0 +1,28 @@
+.brand{
+	background-color: #4da6ff; 
+    color: #fff;
+}
+
+th {
+	border: 1px solid black;
+	text-align: center;
+	line-height: 2.5em;
+}
+
+.content {
+	background-color: #fff;
+}
+
+#bet_form {
+	margin-top: 50px;
+	margin-bottom: 70px;
+}
+
+.btn {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.radio {
+	display: inline;
+}

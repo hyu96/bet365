@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Match;
 
 class Bet extends Model
 {
@@ -10,11 +11,11 @@ class Bet extends Model
 
     public function user()
     {
-    	return $this->belongTo('App\User');
+    	return $this->belongsTo('App\User');
     }
 
     public function match()
     {
-    	return $this->belongTo('App\Match');
+    	return $this->belongsTo('App\Match');
     }
 }
