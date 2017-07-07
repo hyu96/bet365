@@ -59,19 +59,19 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3">Time Close Bet</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" name='time_close_bet' value="{{ $match->time_close_bet }}">
+                            <input type="datetime-local" class="form-control" name='time_close_bet' value="{{ $match->time_close_bet }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Time Start</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" name='time_start' value="{{ $match->time_start }}">
+                            <input type="datetime-local" class="form-control" name='time_start' value="{{ $match->time_start }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-3">Time End</label>
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" name='time_end' value="{{ $match->time_end }}">
+                            <input type="datetime-local" class="form-control" name='time_end' value="{{ $match->time_end }}">
                         </div>
                     </div>
                     <div class="form-group">

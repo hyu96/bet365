@@ -4,10 +4,14 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Bet;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    const ADMIN = 1;
+    const USER = 0;
 
     protected $table = 'users';
     /**
@@ -30,6 +34,6 @@ class User extends Authenticatable
 
     public function bet()
     {
-        return $this->hasMany('App\Bet');
+        return $this->hasMany('App\Models\Bet');
     }
 }

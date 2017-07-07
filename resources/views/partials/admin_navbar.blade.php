@@ -13,7 +13,7 @@
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<div class="nav navbar-nav navbar-right">
 				@if(\Auth::guest())
-					<li><a href="{{ url('/login')}}">Login<<i class="fa fa-user" aria-hidden="true"></i> /a></li>
+					<li><a href="{{ url('/login')}}">Login</a></li>
 					<li><a href="{{ url('/register')}}">Register</a></li>
 				@else
 					<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ \Auth::user()->name }}</a></li>
@@ -24,7 +24,6 @@
 	</div>
 	<div class="col-md-12">
 	    <ul class="nav nav-tabs">
-	    	<li id='home'><a href="{{ route('user.index') }}">Home</a></li>
 	        <li id='public'><a href="{{ route('public.index') }}">List Public Match</a></li>
 	        <li id='hidden'><a href="{{ route('hidden.index') }}">List Hidden Match</a></li>
 	        <li id='create'><a href="{{ route('hidden.create') }}">Create Match</a></li>

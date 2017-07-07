@@ -55,18 +55,20 @@
 								</a>
 							</th>
 							<th colspan="1">
-								{{ Form::open([
-										'route' => ['hidden.destroy',$match->id],
-										'method' => 'delete',
-										'class' => 'form-horizontal',
-										'style' => 'display:inline'
-									])}}
-								{{Form::submit('Delete',['class' => 'btn btn-danger','id' => 'delete_button'])}}
-								{{ Form::close() }}
+							@if($match['number'] == 0)
+							{{ Form::open([
+									'route' => ['public.destroy',$match->id],
+									'method' => 'delete',
+									'class' => 'form-horizontal',
+									'style' => 'display:inline'
+								])}}
+							{{Form::submit('Delete',['class' => 'btn btn-danger','id' => 'delete_button'])}}
+							{{ Form::close() }}
+							@endif
 							</th>
 						@else
 							<th colspan="1">{{ $match->home_score}} - {{ $match->away_score}}</th>
-							<th colspan="1"><a href="{{route('hidden.edit',$match->id)}}" class="btn btn-info" id='detail_button'>Detail</a></th>
+							<th colspan="1"><a href="{{route('public.show',$match->id)}}" class="btn btn-info" id='detail_button'>Detail</a></th>
 							<th colspan="1"></th>
 							<th colspan="1"></th>
 						@endif

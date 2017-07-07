@@ -12,11 +12,11 @@
 		</div>
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<div class="nav navbar-nav navbar-right">
-				@if(\Auth::guest())
-					<li><a href="{{ url('/login')}}">Login</a></li>s
+				@if(Auth::guest())
+					<li><a href="{{ url('/login')}}">Login</a></li>
 					<li><a href="{{ url('/register')}}">Register</a></li>
 				@else
-					<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ \Auth::user()->name }}</a></li>
+					<li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ Auth::user()->name }}</a></li>
 					<li><a href="{{ url('/logout') }}">Logout</a></li>
 				@endif
 			</div>
@@ -26,6 +26,11 @@
 	    <ul class="nav nav-tabs">
 	        <li id='bet'><a href="{{ route('user.index') }}">Live Bet</a></li>
 	        <li id='history'><a href="{{ route('user.bet.history')}}">History</a></li>
+	        @if (Auth::check())
+		        <div id='money' style="float: right; margin-top: 15px">
+		        	Your account: {{ Auth::user()->acc_money }} APC
+		        </div>
+	        @endif
 	    </ul>
 	</div>
 </nav>

@@ -20,35 +20,39 @@
         <div class="row">
             <div class="col-md-12">
                 <table style="width:100%">
-                    <tr class="brand">
-                        <th colspan="3">Match Detail</th>
-                    </tr>
-                    <tr>
-                        <th colspan="3">{{ $match->home_name }} vs {{ $match->away_name }}</th>
-                    </tr>
-                    <tr>
-                        <th colspan="1">Time close bet</th>
-                        <th colspan="1">Time Start</th>
-                        <th colspan="1">Time End</th>
-                    </tr>
-                    <tr class="content">
-                        <th colspan="1">{{ $match->time_close_bet }}</th>
-                        <th colspan="1">{{ $match->time_start }}</th>
-                        <th colspan="1">{{ $match->time_end }}</th>
-                    </tr>
-                    <tr>
-                        <th colspan="3">Rate Bet and number of bets</th>
-                    </tr>
-                    <tr class="content">
-                        <th colspan="1" id="home_rate" data-home_rate="{{$match->home_rate}}">Home: {{ $match->home_rate }}</th>
-                        <th colspan="1" id="draw_rate" data-draw_rate="{{$match->draw_rate}}">Draw: {{ $match->draw_rate }}</th>
-                        <th colspan="1" id="away_rate" data-away_rate="{{$match->away_rate}}">Away: {{ $match->away_rate }}</th>
-                    </tr>
-                    <tr class="content">
-                        <th colspan="1">{{ $home_number }}</th>
-                        <th colspan="1">{{ $draw_number }}</th>
-                        <th colspan="1">{{ $away_number }}</th>
-                    </tr>
+                    <thead>
+                        <tr class="brand">
+                            <th colspan="3">Match Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th colspan="3">{{ $match->home_name }} vs {{ $match->away_name }}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="1">Time close bet</th>
+                            <th colspan="1">Time Start</th>
+                            <th colspan="1">Time End</th>
+                        </tr>
+                        <tr class="content">
+                            <th colspan="1">{{ $match->time_close_bet }}</th>
+                            <th colspan="1">{{ $match->time_start }}</th>
+                            <th colspan="1">{{ $match->time_end }}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3">Rate Bet and number of bets</th>
+                        </tr>
+                        <tr class="content">
+                            <th colspan="1" id="home_rate" data-home_rate="{{$match->home_rate}}">Home: {{ $match->home_rate }}</th>
+                            <th colspan="1" id="draw_rate" data-draw_rate="{{$match->draw_rate}}">Draw: {{ $match->draw_rate }}</th>
+                            <th colspan="1" id="away_rate" data-away_rate="{{$match->away_rate}}">Away: {{ $match->away_rate }}</th>
+                        </tr>
+                        <tr class="content">
+                            <th colspan="1">{{ $home_number }}</th>
+                            <th colspan="1">{{ $draw_number }}</th>
+                            <th colspan="1">{{ $away_number }}</th>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

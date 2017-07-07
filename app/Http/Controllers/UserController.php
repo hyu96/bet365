@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Match;
-use App\Bet;
+use App\Models\Match;
+use App\Models\Bet;
 use App\User;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $matches = Match::where('public', Match::PUBLIC_MATCH)->where('done',DONE)->get();
+        $matches = Match::where('public', Match::PUBLIC_MATCH)->where('done',Match::NOT_DONE)->get();
         return view('user.bet')->with('matches',$matches);
     }
 
@@ -35,6 +35,7 @@ class UserController extends Controller
         $user = User::find($request->user_id);
         $user->acc_money = $user->acc_money - ($request->home_bet + $request->draw_bet + $request->away_bet);
         $user->save();
+        $match = Match::find($request->match_id);
         if($request->home_bet > 0){
             $bet = new Bet();
 
@@ -42,6 +43,7 @@ class UserController extends Controller
             $bet->match_id = $request->match_id;
             $bet->bet_choice = Match::HOME;
             $bet->quantity = $request->home_bet;
+            $bet->rate = $match->home_rate;
             $bet->profit = 0;
 
             $bet->save();
@@ -54,6 +56,7 @@ class UserController extends Controller
             $bet->match_id = $request->match_id;
             $bet->bet_choice = Match::DRAW;
             $bet->quantity = $request->draw_bet;
+            $bet->rate = $match->draw_rate;
             $bet->profit = 0;
 
             $bet->save();
@@ -66,6 +69,7 @@ class UserController extends Controller
             $bet->match_id = $request->match_id;
             $bet->bet_choice = Match::AWAY;
             $bet->quantity = $request->away_bet;
+            $bet->rate = $match->away_rate;
             $bet->profit = 0;
 
             $bet->save();
@@ -76,18 +80,7 @@ class UserController extends Controller
 
     public function showHistory()
     {
-        $bets = Bet::where('user_id',Auth::id())->get();
-        $data = [];
-        $count = 0;
-        foreach ($bets as $bet) {
-            $match = $bet->match;
-            $data[$count]['home_name'] = $match->home_name;
-            $data[$count]['away_name'] = $match->away_name;
-            $data[$count]['home_score'] = $match->home_score;
-            $data[$count]['away_score'] = $match->away_score;
-            $data[$count]['quantity'] = $bet->quantity;
-            $data[$count]['bet_choice'] = $bet->bet_choice;
-        }
-        return view('user.bet.history');
+        $bets = Bet::where('user_id', Auth::id())->with('match')->get();
+        return view('user.history')->with('bets',$bets);
     }
 }

@@ -28,8 +28,8 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        bet365
+                    <a class="navbar-brand" href="{{ route('user.index') }}">
+                        bet365.com
                     </a>
                 </div>
 

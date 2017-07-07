@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Match;
+use App\Models\Match;
+use Carbon\Carbon;
+use Validator;
 
 class HiddenMatchController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class HiddenMatchController extends Controller
      */
     public function index()
     {
-        $matches = Match::where('public',0)->get();
+        $matches = Match::where('public', Match::HIDDEN_MATCH)->get();
         return view('admin.hidden.index')->with('matches',$matches);
     }
 
@@ -36,19 +43,43 @@ class HiddenMatchController extends Controller
      */
     public function store(Request $request)
     {
-        $match = new Match();
-        
-        $match->home_name = $request->home_name;
-        $match->away_name = $request->away_name;
-        $match->home_rate = $request->home_rate;
-        $match->draw_rate = $request->draw_rate;
-        $match->away_rate = $request->away_rate;
-        $match->time_close_bet = $request->time_close_bet;
-        $match->time_start = $request->time_start;
-        $match->time_end = $request->time_end;
+        $validator = Validator::make($request->all(), [
+            'home_name' => 'required',
+            'away_name' => 'required|different:home_name',
+            'home_rate' => 'required',
+            'away_rate' => 'required',
+            'draw_rate' => 'required',
+            'time_close_bet' => 'before:time_start|after:'.Carbon::now(),
+            'time_start' => 'after:time_close_bet',
+            'time_end' => 'after:time_start',
+        ],
+        [
+            'home_name.required' => 'Home name must not empty',
+            'away_name.required' => 'Away name must not empty',
+            'home_rate.required' => 'Home rate must not empty',
+            'draw_rate.required' => 'Draw rate must not empty',
+            'away_rate.required' => 'Away rate must not empty',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('hidden.create')
+                        ->withErrors($validator)
+                        ->withInput();
+        } else {
+            $match = new Match();
+            
+            $match->home_name = $request->home_name;
+            $match->away_name = $request->away_name;
+            $match->home_rate = $request->home_rate;
+            $match->draw_rate = $request->draw_rate;
+            $match->away_rate = $request->away_rate;
+            $match->time_close_bet = $request->time_close_bet;
+            $match->time_start = $request->time_start;
+            $match->time_end = $request->time_end;
+            $match->done = Match::NOT_DONE;
 
-        $match->save();
-        return redirect()->route('hidden.index');
+            $match->save();
+            return redirect()->route('hidden.index');
+        }   
     }
 
     /**
@@ -115,7 +146,7 @@ class HiddenMatchController extends Controller
     public function publicMatch($id)
     {
         $match = Match::find($id);
-        $match->public = 1;
+        $match->public = Match::PUBLIC_MATCH;
         $match->save();
 
         return redirect()->route('public.index');
