@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $matches = Match::where('public', Match::PUBLIC_MATCH)
-            ->where('done' ,Match::NOT_DONE)
+            ->where('done', Match::NOT_DONE)
             ->where('time_close_bet', '>', Carbon::now())
             ->orderBy('time_start')
             ->get();
@@ -30,7 +30,7 @@ class UserController extends Controller
         $home_number = Bet::where('match_id', $id)->where('bet_choice', Match::HOME)->count();
         $draw_number = Bet::where('match_id', $id)->where('bet_choice', Match::DRAW)->count();
         $away_number = Bet::where('match_id', $id)->where('bet_choice', Match::AWAY)->count();
-        return view('user.bet_detail',[
+        return view('user.bet_detail', [
             'match' => $match,
             'home_number' => $home_number,
             'draw_number' => $draw_number,
@@ -54,10 +54,13 @@ class UserController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         } else {
+
+            // update user's money
             $user->acc_money = $user->acc_money - $request->bet_money;
             $user->save();
             $match = Match::find($request->match_id);
 
+            //store user's bet information
             $bet = new Bet();
 
             $bet->user_id = $request->user_id;

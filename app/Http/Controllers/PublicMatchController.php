@@ -48,7 +48,7 @@ class PublicMatchController extends Controller
     }
 
     /**
-     * Display the specified match detail and number of users have bet that match.
+     * Display the specified match detail and users bet that match.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -56,9 +56,12 @@ class PublicMatchController extends Controller
     public function show($id)
     {
         $match = Match::find($id);
+
+        // retrive the number of users bet this match for each choice
         $home_number = Bet::where('match_id', $id)->where('bet_choice', Match::HOME)->count();
         $draw_number = Bet::where('match_id', $id)->where('bet_choice', Match::DRAW)->count();
         $away_number = Bet::where('match_id', $id)->where('bet_choice', Match::AWAY)->count();
+
         $bets = Bet::where('match_id', $id)->with('user')->get();
         return view('admin.public.detail', [
             'match' => $match,
@@ -90,6 +93,7 @@ class PublicMatchController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // update match's information
         $match = Match::find($id);
         $match->home_score = $request->home_score;
         $match->away_score = $request->away_score;
@@ -102,6 +106,7 @@ class PublicMatchController extends Controller
             $match->result = Match::DRAW_WIN;
         }
 
+        // update user's money bet this match
         $bets = Bet::where('match_id',$id)->get();
         foreach ($bets as $bet) {
             $user = $bet->user;
