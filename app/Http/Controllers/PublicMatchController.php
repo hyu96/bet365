@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Match;
 use App\Models\Bet;
+use Carbon\Carbon;
+use Validator;
 
 class PublicMatchController extends Controller
 {
@@ -14,17 +16,13 @@ class PublicMatchController extends Controller
     }
     
     /**
-     * Display a listing of the resource.
+     * Display a listing of all public matches.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $matches = Match::where('public', Match::PUBLIC_MATCH)->get();
-        foreach ($matches as $match) {
-            $number = Bet::where('match_id',$match->id)->count();
-            $match['number'] = $number; 
-        }
+        $matches = Match::where('public', Match::PUBLIC_MATCH)->orderBy('time_start')->get();
         return view('admin.public.index')->with('matches', $matches);
     }
 
@@ -50,7 +48,7 @@ class PublicMatchController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified match detail and number of users have bet that match.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -58,11 +56,11 @@ class PublicMatchController extends Controller
     public function show($id)
     {
         $match = Match::find($id);
-        $home_number = Bet::where('match_id',$id)->where('bet_choice',Match::HOME)->count();
-        $draw_number = Bet::where('match_id',$id)->where('bet_choice',Match::DRAW)->count();
-        $away_number = Bet::where('match_id',$id)->where('bet_choice',Match::AWAY)->count();
-        $bets = Bet::where('match_id',$id)->with('user')->get();
-        return view('admin.public.detail',[
+        $home_number = Bet::where('match_id', $id)->where('bet_choice', Match::HOME)->count();
+        $draw_number = Bet::where('match_id', $id)->where('bet_choice', Match::DRAW)->count();
+        $away_number = Bet::where('match_id', $id)->where('bet_choice', Match::AWAY)->count();
+        $bets = Bet::where('match_id', $id)->with('user')->get();
+        return view('admin.public.detail', [
             'match' => $match,
             'bets' => $bets,
             'home_number' => $home_number,
@@ -72,7 +70,7 @@ class PublicMatchController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified match.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -84,7 +82,7 @@ class PublicMatchController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified match in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -93,13 +91,12 @@ class PublicMatchController extends Controller
     public function update(Request $request, $id)
     {
         $match = Match::find($id);
-        
         $match->home_score = $request->home_score;
         $match->away_score = $request->away_score;
         $match->done = Match::DONE;
-        if ( $match->home_score > $match->away_score ) {
+        if ($match->home_score > $match->away_score) {
             $match->result = Match::HOME_WIN;
-        } else if ( $match->home_score < $match->away_score ) {
+        } else if ($match->home_score < $match->away_score) {
             $match->result = Match::AWAY_WIN;
         } else {
             $match->result = Match::DRAW_WIN;
@@ -124,7 +121,7 @@ class PublicMatchController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified match from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

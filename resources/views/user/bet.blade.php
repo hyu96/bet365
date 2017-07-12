@@ -23,10 +23,12 @@
 					<tr class="brand">
 						<th colspan="3">Featured Betting</th>
 					</tr>
-					@foreach( $matches as $match)
+					@foreach ($matches as $match)
 					<tr>
-						<th colspan="3">{{ $match->home_name }} vs {{ $match->away_name }} - {{ $match->time_start }} >> 
-							<a href="{{ route('user.showMatch',$match->id) }}">Detail</a>
+						<th colspan="3">{{ $match->home_name }} vs {{ $match->away_name }} - {{ $match->time_start }} 
+						@if (Auth::check())	
+							>> <a href="{{ route('user.showMatch',$match->id) }}">Detail</a>
+						@endif
 						</th>
 					</tr>
 					<tr>

@@ -15,18 +15,18 @@ class HiddenMatchController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Show all hidden matches.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $matches = Match::where('public', Match::HIDDEN_MATCH)->get();
-        return view('admin.hidden.index')->with('matches',$matches);
+        $matches = Match::where('public', Match::HIDDEN_MATCH)->orderBy('time_start')->get();
+        return view('admin.hidden.index')->with('matches', $matches);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new match.
      *
      * @return \Illuminate\Http\Response
      */
@@ -36,7 +36,7 @@ class HiddenMatchController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created match in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -46,22 +46,23 @@ class HiddenMatchController extends Controller
         $validator = Validator::make($request->all(), [
             'home_name' => 'required',
             'away_name' => 'required|different:home_name',
-            'home_rate' => 'required',
-            'away_rate' => 'required',
-            'draw_rate' => 'required',
-            'time_close_bet' => 'before:time_start|after:'.Carbon::now(),
+            'home_rate' => 'required|numeric|min:0',
+            'away_rate' => 'required|numeric|min:0',
+            'draw_rate' => 'required|numeric|min:0',
+            'time_close_bet' => 'after:'.Carbon::now(),
             'time_start' => 'after:time_close_bet',
             'time_end' => 'after:time_start',
         ],
         [
             'home_name.required' => 'Home name must not empty',
             'away_name.required' => 'Away name must not empty',
-            'home_rate.required' => 'Home rate must not empty',
-            'draw_rate.required' => 'Draw rate must not empty',
-            'away_rate.required' => 'Away rate must not empty',
+            'home_rate.min' => 'Home rate must be a positive number',
+            'draw_rate.min' => 'Draw rate must be a positive number',
+            'away_rate.min' => 'Away rate must be a positive number',
         ]);
+
         if ($validator->fails()) {
-            return redirect()->route('hidden.create')
+            return redirect()->back()
                         ->withErrors($validator)
                         ->withInput();
         } else {
@@ -94,7 +95,7 @@ class HiddenMatchController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified match.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -102,11 +103,11 @@ class HiddenMatchController extends Controller
     public function edit($id)
     {
         $match = Match::find($id);
-        return view('admin.hidden.edit')->with('match',$match);
+        return view('admin.hidden.edit')->with('match', $match);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified match in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -114,23 +115,48 @@ class HiddenMatchController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $match = Match::find($id);
-        
-        $match->home_name = $request->home_name;
-        $match->away_name = $request->away_name;
-        $match->home_rate = $request->home_rate;
-        $match->draw_rate = $request->draw_rate;
-        $match->away_rate = $request->away_rate;
-        $match->time_close_bet = $request->time_close_bet;
-        $match->time_start = $request->time_start;
-        $match->time_end = $request->time_end;
+        $validator = Validator::make($request->all(), [
+            'home_name' => 'required',
+            'away_name' => 'required|different:home_name',
+            'home_rate' => 'required|numeric|min:0',
+            'away_rate' => 'required|numeric|min:0',
+            'draw_rate' => 'required|numeric|min:0',
+            'time_close_bet' => 'date|after:'.Carbon::now(),
+            'time_start' => 'date|after:time_close_bet',
+            'time_end' => 'date|after:time_start',
+        ],
+        [
+            'home_name.required' => 'Home name must not empty',
+            'away_name.required' => 'Away name must not empty',
+            'home_rate.min' => 'Home rate must be a positive number',
+            'draw_rate.min' => 'Draw rate must be a positive number',
+            'away_rate.min' => 'Away rate must be a positive number',
+        ]);
 
-        $match->save();
-        return redirect()->route('hidden.index');
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        } else {
+            $match = Match::find($id);
+            
+            $match->home_name = $request->home_name;
+            $match->away_name = $request->away_name;
+            $match->home_rate = $request->home_rate;
+            $match->draw_rate = $request->draw_rate;
+            $match->away_rate = $request->away_rate;
+            $match->time_close_bet = $request->time_close_bet;
+            $match->time_start = $request->time_start;
+            $match->time_end = $request->time_end;
+            $match->done = Match::NOT_DONE;
+
+            $match->save();
+            return redirect()->route('hidden.index');
+        }   
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified match from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

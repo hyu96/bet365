@@ -29,10 +29,10 @@
                         <tr>
                             <th colspan="3">{{ $match->home_name }} vs {{ $match->away_name }}</th>
                         </tr>
-                        @if($match->done == 1)
-                        <tr class="content">
-                            <th colspan="3">Score: {{ $match->home_score }} - {{ $match->away_score }}</th>
-                        </tr>
+                        @if ($match->done == 1)
+                            <tr class="content">
+                                <th colspan="3">Score: {{ $match->home_score }} - {{ $match->away_score }}</th>
+                            </tr>
                         @endif
                         <tr>
                             <th colspan="1">Time close bet</th>
@@ -81,23 +81,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($bets as $bet)
-                        <tr>
-                            <th colspan="1">{{ $bet->user->id }}</th>
-                            <th colspan="1">{{ $bet->user->name }}</th>
-                            <th colspan="1">
-                                @if ($bet->bet_choice == 1)
-                                    Home
-                                @elseif ($bet->bet_choice == 0)
-                                    Draw
-                                @else
-                                    Away
-                                @endif
-                            </th>
-                            <th colspan="1">{{ $bet->quantity }}</th>
-                            <th colspan="1">{{ $bet->profit }}</th>
-                            <th colspan="1">{{ $bet->created_at }}</th>
-                        </tr>    
+                        @foreach ($bets as $bet)
+                            <tr>
+                                <th colspan="1">{{ $bet->user->id }}</th>
+                                <th colspan="1">{{ $bet->user->name }}</th>
+                                <th colspan="1">
+                                    @if ($bet->bet_choice == 1)
+                                        Home
+                                    @elseif ($bet->bet_choice == 0)
+                                        Draw
+                                    @else
+                                        Away
+                                    @endif
+                                </th>
+                                <th colspan="1">{{ $bet->quantity }}</th>
+                                <th colspan="1">{{ $bet->profit }}</th>
+                                <th colspan="1">{{ $bet->created_at }}</th>
+                            </tr>    
                         @endforeach
                     </tbody>
                 </table>

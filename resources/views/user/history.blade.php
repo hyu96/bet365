@@ -34,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($bets as $bet)
+                        @foreach ($bets as $bet)
                         <tr>
                             <th colspan="1">
                                 @if ($bet->match->done == 1)    

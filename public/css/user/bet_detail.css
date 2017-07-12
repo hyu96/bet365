@@ -23,6 +23,10 @@ th {
 	width: 100%;
 }
 
-.radio {
-	display: inline;
+select {
+	margin: auto;
+}
+
+#place_bet {
+	text-align: right;
 }

@@ -43,9 +43,15 @@
                             <th colspan="3">Rate Bet and number of bets</th>
                         </tr>
                         <tr class="content">
-                            <th colspan="1" id="home_rate" data-home_rate="{{$match->home_rate}}">Home: {{ $match->home_rate }}</th>
-                            <th colspan="1" id="draw_rate" data-draw_rate="{{$match->draw_rate}}">Draw: {{ $match->draw_rate }}</th>
-                            <th colspan="1" id="away_rate" data-away_rate="{{$match->away_rate}}">Away: {{ $match->away_rate }}</th>
+                            <th colspan="1" id="home_rate" data-home_rate="{{$match->home_rate}}">
+                                Home: {{ $match->home_rate }}
+                            </th>
+                            <th colspan="1" id="draw_rate" data-draw_rate="{{$match->draw_rate}}">
+                                Draw: {{ $match->draw_rate }}
+                            </th>
+                            <th colspan="1" id="away_rate" data-away_rate="{{$match->away_rate}}">
+                                Away: {{ $match->away_rate }}
+                            </th>
                         </tr>
                         <tr class="content">
                             <th colspan="1">{{ $home_number }}</th>
@@ -57,64 +63,47 @@
             </div>
         </div>
         <div class="row" id="bet_form">
-            <form action="{{ route('user.bet.store') }}" class="form-horizontal" method="POST">
-                <input name="user_id" type="hidden" value="{{ Auth::id() }}">
-                <input name="match_id" type="hidden" value='{{ $match->id }} '>
-                {{csrf_field()}}
-                <div class="row">  
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label col-sm-offset-4 col-sm-2" for="home">Home:</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="home_bet" placeholder="0" name="home_bet">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-offset-4 col-sm-2" for="draw">Draw:</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="draw_bet" placeholder="0" name="draw_bet">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-offset-4 col-sm-2" for="away">Away:</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="away_bet" placeholder="0" name="away_bet">
-                            </div>
-                        </div>
-                    </div> 
-                    <div class="col-md-6">
-                        <div class="row form-group">
-                            <label class="control-label col-sm-2" for="home_win">Win:</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="home_win" placeholder="0" disabled>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <label class="control-label col-sm-2" for="draw_win">Win:</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="draw_win" placeholder="0" disabled>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <label class="control-label col-sm-2" for="away">Win:</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="away_win" placeholder="0" disabled="">
-                            </div>
+            <div class="col-md-offset-4 col-md-6">
+                <form action="{{ route('user.bet.store') }}" class="form-horizontal" method="POST">
+                    <input name="user_id" type="hidden" value="{{ Auth::id() }}">
+                    <input name="match_id" type="hidden" value='{{ $match->id }} '>
+                    {{csrf_field()}}
+
+                    <div class="form-group ">
+                        <div class="col-sm-2" for="home" id="place_bet"><strong>Place:</strong></div>
+                        <div class="col-sm-5">
+                            <select name="bet_choice">
+                                <option value = 1> {{ $match->home_name }} </option>
+                                <option value = 0> Draw </option>
+                                <option value = -1> {{ $match->away_name }} </option>
+                            </select>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group" id="bet_button"> 
-                            <div class="col-sm-offset-6 col-sm-3">
-                                <button type="submit" class="btn btn-primary">Bet</button>
-                            </div>
+    
+                    <div class="form-group {{ $errors->has('bet_money')?'has-error':''}}">
+                        <label class="control-label col-sm-2" for="home">Money:</label>
+                        <div class="col-sm-5">
+                            <input type="number" class="form-control" id="bet_money" placeholder="0" min=1 name="bet_money"         value="{{ old('home_bet') }}" >
+                            @if ($errors->get('bet_money'))
+                                <span class="text-danger">{{ $errors->first('bet_money') }}</span><br>
+                            @endif
                         </div>
                     </div>
-                </div>
 
-            </form>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="home_win">Win:</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="win_money" placeholder="0" disabled>
+                        </div>
+                    </div>
+                  
+                    <div class="form-group" id="bet_button"> 
+                        <div class="col-sm-offset-2 col-sm-2">
+                            <button type="submit" class="btn btn-primary">Bet</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @stop

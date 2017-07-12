@@ -16,7 +16,8 @@ th {
 #team_name{
 	border-bottom: none;
 }
-#score{
+
+.content{
 	border-top: none;
 	border-bottom: none;
 }
