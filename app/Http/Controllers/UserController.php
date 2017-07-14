@@ -43,7 +43,7 @@ class UserController extends Controller
     {
         $user = User::find($request->user_id);
         $validator = Validator::make($request->all(), [
-            'bet_money' => 'required|numeric|max:'.$user->acc_money,
+            'bet_money' => 'required|integer|min:1|max:'.$user->acc_money,
         ],
         [
             'bet_money.max' => 'You dont have enough money'
