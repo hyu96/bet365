@@ -23,11 +23,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', 'UserController@index')->name('user.index');
 
-Route::get('/bet/{id}', 'UserController@show')->name('user.showMatch');
+Route::get('/bet/{id}', 'UserController@show')->name('user.showMatch')->middleware('auth');
 
-Route::post('/bet', 'UserController@store')->name('user.bet.store');
+Route::post('/bet', 'UserController@store')->name('user.bet.store')->middleware('auth');
 
-Route::get('/history', 'UserController@showHistory')->name('user.bet.history');
+Route::get('/history', 'UserController@showHistory')->name('user.bet.history')->middleware('auth');
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
