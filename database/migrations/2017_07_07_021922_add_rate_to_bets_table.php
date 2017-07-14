@@ -26,7 +26,7 @@ class AddRateToBetsTable extends Migration
     public function down()
     {
         Schema::table('bets', function (Blueprint $table) {
-            //
+            $table->dropColumn('rate');
         });
     }
 }

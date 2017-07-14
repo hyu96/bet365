@@ -26,7 +26,7 @@ class AddDoneToMatchesTable extends Migration
     public function down()
     {
         Schema::table('matches', function (Blueprint $table) {
-            //
+            $table->dropColumn('done');
         });
     }
 }

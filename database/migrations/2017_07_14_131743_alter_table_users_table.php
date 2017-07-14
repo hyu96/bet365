@@ -29,7 +29,8 @@ class AlterTableUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('provider');
+            $table->dropColumn('provider_id');
         });
     }
 }

@@ -29,12 +29,24 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
-
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4">
+                                <a class="btn btn-link" href="{{ URL::to('auth/google') }}">
+                                    <i class="fa fa-google-plus-square fa-lg" aria-hidden="true"></i> Đăng nhập bằng Google
+                                </a>
+                            </div>
+                            <div class="col-md-8 col-md-offset-4">
+                                <a class="btn btn-link" href="{{ URL::to('auth/facebook') }}">
+                                    <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i> Đăng nhập bằng Facebook
+                                </a>
                             </div>
                         </div>
 
