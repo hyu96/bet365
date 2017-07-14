@@ -41,4 +41,9 @@ return [
         'redirect' => 'http://bet322.herokuapp.com/auth/google/callback',
     ],
 
+    'facebook' => [
+        'client_id' => '1380705268679218',
+        'client_secret' => '6ee063c4227c8ffbcf915e4551927a03',
+        'redirect' => 'http://bet322.herokuapp.com/auth/facebook/callback',
+    ],
 ];
