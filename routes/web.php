@@ -29,6 +29,10 @@ Route::post('/bet', 'UserController@store')->name('user.bet.store')->middleware(
 
 Route::get('/history', 'UserController@showHistory')->name('user.bet.history')->middleware('auth');
 
+Route::get('/auth/{provider}', 'SocialAuthController@redirectToProvider');
+
+Route::get('/auth/{provide}/callback', 'SocialAuthController@handleProviderCallback');
+
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::post('admin/matches/hidden/{id}/public', 'HiddenMatchController@publicMatch')->name('hidden.public');

@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'google' => [
+        'client_id' => '208103046541-nncl466j112hc3s4dl5ub3qgu8ls0n6s.apps.googleusercontent.com',
+        'client_secret' => 'tH010txPZ4kDtVvU0ETc8E_Z',
+        'redirect' => 'http://bet322.herokuapp.com/auth/google/callback',
+    ],
+
 ];
