@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="{{route('user.index')}}" class="navbar-brand"><i class="fa fa-futbol-o" aria-hidden="true"></i> bet365.com</a>
+            <a href="{{route('user.index')}}" class="navbar-brand"><i class="fa fa-futbol-o" aria-hidden="true"></i> bet322.com</a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <div class="nav navbar-nav navbar-right">

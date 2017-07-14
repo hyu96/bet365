@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="{{route('public.index')}}" class="navbar-brand"><i class="fa fa-futbol-o" aria-hidden="true"></i> bet365 Administrator</a>
+			<a href="{{route('public.index')}}" class="navbar-brand"><i class="fa fa-futbol-o" aria-hidden="true"></i> bet322 Administrator</a>
 		</div>
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<div class="nav navbar-nav navbar-right">
